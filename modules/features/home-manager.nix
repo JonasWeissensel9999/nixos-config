@@ -1,5 +1,5 @@
 { self, inputs, ... }: {
-  flake.nixosModules.myHomeManager = {pkgs, ...}: {
+  flake.nixosModules.myHomeManager = { pkgs, ... }: {
     imports = [
       inputs.home-manager.nixosModules.default
     ];
@@ -8,6 +8,6 @@
       useGlobalPkgs = true;
       useUserPackages = true;
     };
-    
+
   };
 }
