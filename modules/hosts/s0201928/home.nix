@@ -342,8 +342,9 @@
           enable = true;
           settings = {
             font-family = "Terminess Nerd Font Mono";
-            font-size = 16;
+            font-size = 14;
             window-decoration = "none";
+            theme = "Smyck";
           };
         };
         git = {
@@ -525,6 +526,21 @@
           };
         };
         jq.enable = true;
+        kitty = {
+          enable = true;
+          autoThemeFiles = {
+            dark = "Alabaster_Dark";
+            light = "Alabaster_Dark";
+            noPreference = "Alabaster_Dark";
+          };
+          font = {
+            name = "Terminess Nerd Font Mono";
+            size = 14;
+          };
+          settings = {
+            scrollback_lines = 100000;
+          };
+        };
         lazygit = {
           enable = true;
           settings = {
