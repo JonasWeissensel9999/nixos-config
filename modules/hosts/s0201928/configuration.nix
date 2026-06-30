@@ -12,6 +12,7 @@
     {
       imports = [
         self.nixosModules.niri
+        self.nixosModules.nix-mdatp
       ];
 
       #### BEGIN hardware-configuration.nix
@@ -74,7 +75,6 @@
       #   keyMap = "us";
       #   useXkbConfig = true; # use xkb.options in tty.
       # };
-      services.mdatp.enable = true;
 
       # Enable the X11 windowing system.
       services.xserver.enable = true;
