@@ -74,6 +74,7 @@
       #   keyMap = "us";
       #   useXkbConfig = true; # use xkb.options in tty.
       # };
+      services.mdatp.enable = true;
 
       # Enable the X11 windowing system.
       services.xserver.enable = true;
