@@ -23,9 +23,9 @@
         "usb_storage"
         "sd_mod"
       ];
-      boot.initrd.kernelModules = [ ];
+      boot.initrd.kernelModules = [ "evdi" ];
       boot.kernelModules = [ "kvm-amd" ];
-      boot.extraModulePackages = [ ];
+      boot.extraModulePackages = [ config.boot.kernelPackages.evdi ];
 
       swapDevices = [ ];
 
@@ -78,6 +78,9 @@
 
       # Enable the X11 windowing system.
       services.xserver.enable = true;
+      # see https://wiki.nixos.org/wiki/Displaylink
+      services.xserver.videoDrivers = [ "displaylink" ];
+      systemd.services.dlm.wantedBy = [ "multi-user.target" ];
 
       # Configure keymap in X11
       # services.xserver.xkb.layout = "us";
@@ -131,6 +134,8 @@
         neovim
         wget
         git
+
+        displaylink
       ];
 
       programs = {
