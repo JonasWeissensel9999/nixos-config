@@ -11,6 +11,7 @@
 
       # applications
       self.nixosModules.noctalia
+      self.nixosModules.docker
     ];
   };
 
