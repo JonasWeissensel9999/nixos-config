@@ -341,7 +341,7 @@
         ghostty = {
           enable = true;
           settings = {
-            font-family = "Terminess Nerd Font Mono";
+            font-family = "BlexMono Nerd Font";
             font-size = 14;
             window-decoration = "none";
             theme = "Smyck";
@@ -534,7 +534,7 @@
             noPreference = "Alabaster_Dark";
           };
           font = {
-            name = "Terminess Nerd Font Mono";
+            name = "BlexMono Nerd Font";
             size = 14;
           };
           settings = {
@@ -590,9 +590,25 @@
               rope
               mccabe
               pynvim
-              ty
             ];
-          extraPackages = [ ];
+          extraPackages = with pkgs; [
+            cargo
+            gnumake
+            gcc
+            cmake
+            tree-sitter
+            parinfer-rust
+            fnlfmt
+            stylua
+            prettierd
+            cljfmt
+            rustfmt
+            shfmt
+            pgformatter
+            ruff
+            ty
+          ];
+          sideloadInitLua = true;
         };
         opencode = {
           enable = true;
@@ -710,84 +726,73 @@
         };
 
         packages = with pkgs; [
-          #genAI
-          rtk
-
-          # tools
-          localsend
-
-          # fonts
-          nerd-fonts.blex-mono
-          nerd-fonts.terminess-ttf
-          atkinson-monolegible
-          atkinson-hyperlegible
-          font-awesome
-          fixedsys-excelsior
-
-          # cli
           acli
           age-plugin-yubikey
           amazon-ecr-credential-helper
+          atkinson-hyperlegible
+          atkinson-monolegible
           awscli2
-          bash-language-server
           babashka
+          bash-language-server
           chromedriver
           clj-kondo
           cljfmt
           clojure
           clojure-lsp
+          dhall-lsp-server
           docker-credential-helpers
+          editorconfig-checker
           eslint
           fennel-ls
+          fixedsys-excelsior
           fnlfmt
+          font-awesome
           git-extras
           github-cli
+          google-chrome
+          gopls
           jdk
           jless
           just
           leiningen
+          localsend
+          lua-language-server
           lua51Packages.fennel
           lua51Packages.luarocks
+          luajit
+          marksman
+          nerd-fonts.blex-mono
+          nerd-fonts.terminess-ttf
+          nginx-language-server
           nh
           nil
           nix-prefetch-git
           nixd
           nixfmt
+          nls
           nodejs
           pnpm
           polylith
           pre-commit
           ripgrep
-          shellcheck
-          shfmt
-          ssm-session-manager-plugin
-          terraform
-          terraform-docs
-          tflint
-          uv
-          wireguard-tools
-          yubikey-manager
-          cljfmt
-          clojure-lsp
-          dhall-lsp-server
-          editorconfig-checker
-          fennel-ls
-          gopls
-          lua-language-server
-          luajit
-          marksman
-          nginx-language-server
-          nixfmt
-          nls
+          rtk
           ruff
+          self.packages.${pkgs.stdenv.hostPlatform.system}.git-mob
           shellcheck
           shfmt
           sleek
+          ssm-session-manager-plugin
           svelte-language-server
+          terraform
+          terraform-docs
           terraform-ls
+          tflint
+          uv
+          wireguard-tools
+          wl-clipboard-rs
           yaml-language-server
+          yubikey-manager
           zprint
-          self.packages.${pkgs.stdenv.hostPlatform.system}.git-mob
         ];
 
       };
