@@ -23,6 +23,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+    globalprotect-openconnect.url = "github:yuezk/GlobalProtect-openconnect";
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
