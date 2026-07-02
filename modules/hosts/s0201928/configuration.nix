@@ -139,7 +139,6 @@
       ];
 
       programs = {
-        firefox.enable = true;
         fish.enable = true;
       };
 
