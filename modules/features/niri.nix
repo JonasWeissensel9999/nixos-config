@@ -17,6 +17,13 @@
       packages.myNiri = inputs.wrapper-modules.wrappers.niri.wrap {
         inherit pkgs; # IMPORTANT
         settings = {
+          extraConfig = ''
+            window-rule {
+                match app-id="^(zoom|us.zoom.Zoom)$"
+                open-floating true
+            }
+          '';
+
           spawn-at-startup = [
             (lib.getExe self'.packages.myNoctalia)
           ];
@@ -30,6 +37,13 @@
             };
           };
           outputs = {
+            "eDP-1" = {
+              scale = 1.0;
+              position = _: {
+                props.x = 0;
+                props.y = 0;
+              };
+            };
             "Dell Inc. DELL U4025QW 412BB34" = {
               transform = "normal";
               variable-refresh-rate = _: { };
@@ -142,10 +156,22 @@
             "Mod+Shift+U".move-workspace-down = _: { };
             "Mod+Shift+I".move-workspace-up = _: { };
 
-            "Mod+WheelScrollDown" = _: { props.cooldown-ms = 150; content.focus-workspace-down = _: { }; };
-            "Mod+WheelScrollUp" = _: { props.cooldown-ms = 150; content.focus-workspace-up = _: { }; };
-            "Mod+Ctrl+WheelScrollDown" = _: { props.cooldown-ms = 150; content.move-column-to-workspace-down = _: { }; };
-            "Mod+Ctrl+WheelScrollUp" = _: { props.cooldown-ms = 150; content.move-column-to-workspace-up = _: { }; };
+            "Mod+WheelScrollDown" = _: {
+              props.cooldown-ms = 150;
+              content.focus-workspace-down = _: { };
+            };
+            "Mod+WheelScrollUp" = _: {
+              props.cooldown-ms = 150;
+              content.focus-workspace-up = _: { };
+            };
+            "Mod+Ctrl+WheelScrollDown" = _: {
+              props.cooldown-ms = 150;
+              content.move-column-to-workspace-down = _: { };
+            };
+            "Mod+Ctrl+WheelScrollUp" = _: {
+              props.cooldown-ms = 150;
+              content.move-column-to-workspace-up = _: { };
+            };
 
             "Mod+WheelScrollRight".focus-column-right = _: { };
             "Mod+WheelScrollLeft".focus-column-left = _: { };
@@ -189,25 +215,71 @@
             "Ctrl+Print".screenshot-screen = _: { };
             "Alt+Print".screenshot-window = _: { };
 
-            "Mod+Escape" = _: { props.allow-inhibiting = false; content.toggle-keyboard-shortcuts-inhibit = _: { }; };
+            "Mod+Escape" = _: {
+              props.allow-inhibiting = false;
+              content.toggle-keyboard-shortcuts-inhibit = _: { };
+            };
             "Mod+Shift+E".quit = _: { };
             "Ctrl+Alt+Delete".quit = _: { };
             "Mod+Shift+P".power-off-monitors = _: { };
 
             # Volume, brightness, media controls
-            "XF86AudioRaiseVolume" = _: { props.allow-when-locked = true; content.spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; };
-            "XF86AudioLowerVolume" = _: { props.allow-when-locked = true; content.spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; };
-            "XF86AudioMute" = _: { props.allow-when-locked = true; content.spawn-sh = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; };
-            "XF86AudioMicMute" = _: { props.allow-when-locked = true; content.spawn-sh = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; };
+            "XF86AudioRaiseVolume" = _: {
+              props.allow-when-locked = true;
+              content.spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0";
+            };
+            "XF86AudioLowerVolume" = _: {
+              props.allow-when-locked = true;
+              content.spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
+            };
+            "XF86AudioMute" = _: {
+              props.allow-when-locked = true;
+              content.spawn-sh = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+            };
+            "XF86AudioMicMute" = _: {
+              props.allow-when-locked = true;
+              content.spawn-sh = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+            };
 
-            "XF86AudioPlay" = _: { props.allow-when-locked = true; content.spawn-sh = "playerctl play-pause"; };
-            "XF86AudioPause" = _: { props.allow-when-locked = true; content.spawn-sh = "playerctl play-pause"; };
-            "XF86AudioStop" = _: { props.allow-when-locked = true; content.spawn-sh = "playerctl stop"; };
-            "XF86AudioPrev" = _: { props.allow-when-locked = true; content.spawn-sh = "playerctl previous"; };
-            "XF86AudioNext" = _: { props.allow-when-locked = true; content.spawn-sh = "playerctl next"; };
+            "XF86AudioPlay" = _: {
+              props.allow-when-locked = true;
+              content.spawn-sh = "playerctl play-pause";
+            };
+            "XF86AudioPause" = _: {
+              props.allow-when-locked = true;
+              content.spawn-sh = "playerctl play-pause";
+            };
+            "XF86AudioStop" = _: {
+              props.allow-when-locked = true;
+              content.spawn-sh = "playerctl stop";
+            };
+            "XF86AudioPrev" = _: {
+              props.allow-when-locked = true;
+              content.spawn-sh = "playerctl previous";
+            };
+            "XF86AudioNext" = _: {
+              props.allow-when-locked = true;
+              content.spawn-sh = "playerctl next";
+            };
 
-            "XF86MonBrightnessUp" = _: { props.allow-when-locked = true; content.spawn = [ "brightnessctl" "--class=backlight" "set" "+10%" ]; };
-            "XF86MonBrightnessDown" = _: { props.allow-when-locked = true; content.spawn = [ "brightnessctl" "--class=backlight" "set" "10%-" ]; };
+            "XF86MonBrightnessUp" = _: {
+              props.allow-when-locked = true;
+              content.spawn = [
+                "brightnessctl"
+                "--class=backlight"
+                "set"
+                "+10%"
+              ];
+            };
+            "XF86MonBrightnessDown" = _: {
+              props.allow-when-locked = true;
+              content.spawn = [
+                "brightnessctl"
+                "--class=backlight"
+                "set"
+                "10%-"
+              ];
+            };
           };
         };
       };
